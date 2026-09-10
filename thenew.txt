@@ -1,0 +1,63 @@
+Build a simple CRUD for "products" in a LavaLust PHP framework project.
+
+Table SQL (products):
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_name VARCHAR(100) NOT NULL,
+    description TEXT,
+    price DECIMAL(10,2) NOT NULL,
+    quantity INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+Generate these files using LavaLust conventions (query builder style, not Laravel):
+
+1. app/models/ProductModel.php
+- extends Model, protected $table = 'products';
+- getAll(), getById($id), create($data), updateProduct($id, $data), deleteProduct($id)
+- use $this->db->table($this->table)->where()/get()/get_all()/insert()/update()/delete()
+
+2. app/controllers/ProductController.php
+- extends Controller, constructor loads ProductModel via $this->call->model('ProductModel')
+- index() -> list all products, view products/index
+- create() -> GET shows form, POST inserts via $this->io->post(), redirect('products')
+- edit($id) -> GET shows form prefilled, POST updates, redirect('products')
+- delete($id) -> deletes, redirect('products')
+
+3. Views in app/views/products/:
+- index.php -> table of products with Edit/Delete links + "Add Product" button, escape output with html_escape()
+- create.php -> form (product_name, description, price, quantity) posting to site_url('products/create')
+- edit.php -> same form prefilled with existing values, posting to site_url('products/edit/'.$id)
+
+4. Routes to add in app/config/routes.php:
+$router->get('/products', 'ProductController::index');
+$router->match('/products/create', 'ProductController::create', ['GET', 'POST']);
+$router->match('/products/edit/{id}', 'ProductController::edit', ['GET', 'POST']);
+$router->get('/products/delete/{id}', 'ProductController::delete');
+
+Keep styling minimal (plain HTML or Bootstrap). No auth needed. Generate full working code for each file.
+
+
+3. Apply Authentication
+
+Protect the product management pages using LavaLust Middleware or any appropriate authentication mechanism.
+
+Only authenticated users should be allowed to access:
+
+/products
+
+/products/create
+
+/products/edit/{id}
+
+/products/delete/{id}
+
+Students may use:
+
+LavaLust middleware
+
+Session-based authentication
+
+Any other appropriate authentication mechanism
+
+The objective is to ensure that unauthenticated users cannot directly access the CRUD pages.
