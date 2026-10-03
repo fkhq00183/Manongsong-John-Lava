@@ -183,6 +183,24 @@ $database['main'] = array(
 $config['base_url'] = 'http://localhost:3000/';
 ```
 
+### API Signing Keys
+
+The API library reads `JWT_SECRET` and `REFRESH_TOKEN_KEY` from the process environment. Generate two different random values (at least 32 characters each):
+
+```bash
+php -r "echo bin2hex(random_bytes(32)), PHP_EOL;"
+```
+
+In PowerShell, set each value before starting the local server:
+
+```powershell
+$env:JWT_SECRET = 'paste-the-first-generated-value'
+$env:REFRESH_TOKEN_KEY = 'paste-the-second-generated-value'
+php lava serve
+```
+
+Set the same two variable names in Render's backend environment settings, using new production values. The old keys were previously in the source and should be treated as exposed; rotate them. This project reads process environment variables directly, so a `.env` file is not loaded automatically.
+
 ---
 
 ## Building a REST API

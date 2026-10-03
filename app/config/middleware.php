@@ -44,8 +44,10 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 */
 
 require_once APP_DIR . 'middlewares/ProductAuthMiddleware.php';
+require_once APP_DIR . 'middlewares/ApiAuthMiddleware.php';
 
 $config['middlewares'] = [
     'student' => 'StudentMiddleware',
-    'product_auth' => 'ProductAuthMiddleware'
+    'product_auth' => 'ProductAuthMiddleware',
+    'api_auth' => 'ApiAuthMiddleware'
 ];

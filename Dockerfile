@@ -1,4 +1,14 @@
 ARG PHP_VERSION=8.5
+ARG VITE_BASE_PATH=/react/
+
+FROM node:22-alpine AS frontend-build
+
+WORKDIR /frontend
+COPY react-frontend/package*.json ./
+RUN npm ci
+COPY react-frontend/ ./
+ENV VITE_BASE_PATH=${VITE_BASE_PATH}
+RUN npm run build
  
 FROM php:${PHP_VERSION}-apache
  
@@ -13,6 +23,7 @@ RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/Allo
  
 # Copy app files
 COPY . /var/www/html/
+COPY --from=frontend-build /frontend/dist /var/www/html/public/react
  
 # Fix permissions
 RUN chown -R www-data:www-data /var/www/html \
