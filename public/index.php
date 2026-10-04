@@ -1,5 +1,11 @@
 <?php
 define('PREVENT_DIRECT_ACCESS', TRUE);
+
+if (PHP_SAPI === 'cli') {
+	$_SERVER['REQUEST_METHOD'] ??= 'GET';
+	$_SERVER['REQUEST_URI'] ??= '/';
+}
+
 /**
  * ------------------------------------------------------------------
  * LavaLust - an opensource lightweight PHP MVC Framework

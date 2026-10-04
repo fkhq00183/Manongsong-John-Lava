@@ -1,13 +1,9 @@
 <?php
+
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
-/**
- * Controller: MigrationController
- * 
- * Automatically generated via CLI.
- */
-class MigrationController extends Controller {
-
+class MigrationController extends Controller
+{
     public function __construct()
     {
         parent::__construct();
@@ -16,7 +12,6 @@ class MigrationController extends Controller {
 
     public function create_migration($migration_class)
     {
-        // e.g. $migration_class = "create_users_table"
         $this->migration->create_migration($migration_class);
     }
 
@@ -35,11 +30,13 @@ class MigrationController extends Controller {
         $this->migration->rollback_all();
     }
 
-    public function refresh() {
-         $this->migration->refresh();
+    public function refresh()
+    {
+        $this->migration->refresh();
     }
 
-    public function status() {
-         $this->migration->status();
+    public function status()
+    {
+        $this->migration->status();
     }
 }

@@ -88,8 +88,7 @@ $router->options('/api/products', 'ApiController::options');
 $router->options('/api/products/{id}', 'ApiController::options');
 
 
-
-// migration routes
+// Migration Routes
 $router->get('create-migration/{migration_class}', 'MigrationController::create_migration');
 $router->get('migrate', 'MigrationController::migrate');
 $router->get('rollback', 'MigrationController::rollback');

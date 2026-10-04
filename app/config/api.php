@@ -145,8 +145,12 @@ $config['users_table'] = 'users';
 | a browser, so set your real domain in production.
 |
 */
-$config['allow_origin'] = getenv('FRONTEND_ORIGIN')
-	?: (config_item('environment') === 'production' ? '' : 'http://localhost:5173');
+$request_origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+$config['allow_origin'] = in_array($request_origin, [
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'http://localhost:5175',
+], true) ? $request_origin : 'https://manongsong-john-judel-crud.onrender.com';
 
 /*
 |--------------------------------------------------------------------------
@@ -166,7 +170,7 @@ $config['refresh_token_table'] = 'refresh_tokens';
 | application's name or URL.
 |
 */
-$config['jwt_issuer'] = getenv('JWT_ISSUER') ?: 'manongsong-john-judel-lavalust';
+$config['jwt_issuer'] = getenv('JWT_ISSUER') ?: '';
 
 /*
 |--------------------------------------------------------------------------
@@ -177,7 +181,7 @@ $config['jwt_issuer'] = getenv('JWT_ISSUER') ?: 'manongsong-john-judel-lavalust'
 |
 */
 
-$config['jwt_audience'] = getenv('JWT_AUDIENCE') ?: 'manongsong-john-judel-lavalust-react-client';
+$config['jwt_audience'] = getenv('JWT_AUDIENCE') ?: '';
 
 /*
 |--------------------------------------------------------------------------
